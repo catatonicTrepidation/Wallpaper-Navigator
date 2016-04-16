@@ -1,19 +1,19 @@
 
-
 #!/bin/bash
 
 arr=(/home/miaow/Wallpaper/*)
+
+numfiles=${#arr[@]}
 
 value=$(<BGIndex.txt)
 BGIndex.txt>&-
 echo "Value: $value"
 
-if (($value > 3)); then
-    echo $(($value-4)) > BGIndex.txt
-    value=$(($value-4));
-fi
+echo $(($(($numfiles + $(($value - 5)))) % $numfiles)) > BGIndex.txt
+value=$(($(($numfiles + $(($value - 5)))) % $numfiles));
 
 
 
 PIC="${arr[$value]}"
 gsettings set org.gnome.desktop.background picture-uri "file://$PIC"
+
